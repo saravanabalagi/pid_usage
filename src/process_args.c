@@ -26,7 +26,8 @@ static error_t parse_option(int key, char *arg, struct argp_state *state) {
 
 void get_args(int argc, char **argv, struct arguments* arguments) {
     char doc[] = "A simple command line utility to find CPU and RAM Utilization "
-                 "within certain intervals for a given PID. Currenly the output is CSV formatted";
+                 "within certain intervals for a given PID and all its subprocesses. "
+                 "Currently the output is CSV formatted";
     static struct argp_option options[] = {
             {"pid",   'p', "PID", 0, "(int) PID of program to monitor" },
             {"interval",   'i', "I", 0, "(float) Calculate usage every I seconds" },

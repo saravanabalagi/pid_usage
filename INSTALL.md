@@ -1,6 +1,6 @@
 ## Temporary Execution
 
-1. Download the latest tarball from [releases](releases)
+1. Download the latest tarball from [releases](https://github.com/saravanabalagi/pid_usage/releases)
 1. Extract the tarball and execute `chmod +x pid_usage` in terminal
 1. Now you can use `pid_usage` from inside this folder
 
