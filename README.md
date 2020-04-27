@@ -10,6 +10,8 @@ CPU %, Virtual Memory, Resident Memory
 10.0%, 4601 MiB, 154 MiB
 ```
 
+![Screencast](screenshots/screencast.gif)
+
 ## Options
 
 You can customlize the following options:
@@ -54,4 +56,4 @@ Pull requests are very welcome.
 
 ## Licence
 
-See attached [LICENCE](LICENSE)
+See attached [Licence](LICENSE)
