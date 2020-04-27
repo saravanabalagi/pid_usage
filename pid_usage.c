@@ -42,7 +42,7 @@ int main(int argc, char **argv) {
         last_measured_at = cpu_usage.measured_at;
 
         // Header CSV
-        if(i == 0) printf("Cpu Percent, Virtual Memory, Resident Memory\n");
+        if(i == 0) printf("CPU %%, Virtual Memory, Resident Memory\n");
 
         // Values CSV
         printf("%.1f%%, %zu MiB, %zu MiB\n",

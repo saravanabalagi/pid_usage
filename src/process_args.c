@@ -26,7 +26,7 @@ void get_args(int argc, char **argv, struct arguments* arguments) {
 
     static struct argp_option options[] = {
             {"pid",   'p', "PID", 0, "(int) PID of program to monitor" },
-            {"interval",   'i', "I", 0, "(float) Calculate CPU Usage every I seconds" },
+            {"interval",   'i', "I", 0, "(float) Calculate usage every I seconds" },
             {"repeat",   'r', "R", 0, "(int) Program prints output R times" },
             { 0 } // always terminate with a zero'd struct argp_option
     };
