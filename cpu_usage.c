@@ -5,6 +5,7 @@
 #include <inttypes.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <argp.h>
 
 #ifdef CLOCK_MONOTONIC_RAW
 #define CPU_USAGE_CLOCK CLOCK_MONOTONIC_RAW
@@ -70,21 +71,57 @@ double difftime_time(struct timespec t0, struct timespec t1) {
     return diff;
 }
 
+
+struct arguments {
+    pid_t pid;
+    double interval;
+    unsigned int repeat;
+};
+
+static error_t parse_option( int key, char *arg, struct argp_state *state ) {
+    struct arguments *arguments = state->input;
+    bool valid = true;
+
+    switch ( key ) {
+        case 'p': arguments->pid = atoi(arg); break;
+        case 'i': arguments->interval = atof(arg); break;
+        case 'r': arguments->repeat = atoi(arg); break;
+        case ARGP_KEY_END:
+            if(arguments->pid <= 0) valid = false;
+            if(arguments->interval <= 0.0001) valid = false;
+            if(arguments->repeat <= 0 || arguments->repeat >= UINT16_MAX) valid = false;
+            if(!valid) argp_usage(state);
+            break;
+        default:
+            return ARGP_ERR_UNKNOWN;
+    }
+    return 0;
+}
+
+static struct argp_option options[] = {
+    {"pid",   'p', "PID", 0, "(int) PID of program to monitor" },
+    {"interval",   'i', "INTERVAL", 0, "(float) Calculate CPU Usage every 'i' seconds" },
+    {"repeat",   'r', "TIMES", 0, "(int) Number of iterations to run" },
+    { 0 } // always terminate with a zero'd struct argp_option
+};
+
+char doc[] = "Utility to find CPU and RAM Utilization within certain interval";
+char args_doc[] = "PID INTERVAL REPEAT";
+
 int main(int argc, char **argv) {
 
-    if(argc == 0+1) {
-        printf("Usage: cpu_usage <pid:int> [<interval:float|1.5> [<times:int|UINT16_MAX>]]");
-        return 1;
-    } else if(argc > 3+1) {
-        printf("More than three argument provided");
-        return 1;
-    }
+    // defaults
+    struct arguments arguments = { 0 };
+    arguments.pid = 0;
+    arguments.interval = 1.5;
+    arguments.repeat = 1;
 
-    pid_t pid = atoi(argv[1]);
-    double interval = 1.5;
-    unsigned int times = UINT16_MAX;
-    if(argc == 3) interval = atof(argv[2]);
-    if(argc == 4) times = atoi(argv[3]);
+    struct argp argp = {options, parse_option, 0, doc};
+    argp_parse(&argp, argc, argv, 0, 0, &arguments);
+
+    pid_t pid = arguments.pid;
+    double interval = arguments.interval;
+    unsigned int repeat_times = arguments.repeat;
 
     struct process_cpu_usage cpu_usage;
     struct timespec last_measured_at;
@@ -95,23 +132,24 @@ int main(int argc, char **argv) {
     get_process_info(pid, &cpu_usage);
     last_measured_total_usage = cpu_usage.total_usage;
     last_measured_at = cpu_usage.measured_at;
-
-    // Header CSV
-    printf("Cpu Percent, Virtual Memory, Resident Memory\n");
+    usleep(0.1 * 1000 * 1000);
 
     int i = 0;
-    while(i < times) {
-        usleep(interval * 1000 * 1000);
+    while(i < repeat_times) {
         get_process_info(pid, &cpu_usage);
         cpu_percent = 100. * (cpu_usage.total_usage - last_measured_total_usage) / difftime_time(last_measured_at, cpu_usage.measured_at);
         last_measured_total_usage = cpu_usage.total_usage;
         last_measured_at = cpu_usage.measured_at;
 
+        // Header CSV
+        if(i == 0) printf("Cpu Percent, Virtual Memory, Resident Memory\n");
+
         // Values CSV
-        printf("%.1f%%, Virtual: %zu MiB, %zu MiB\n",
+        printf("%.1f%%, %zu MiB, %zu MiB\n",
                 cpu_percent,
                 cpu_usage.virtual_memory/(1024*1024),
                 cpu_usage.resident_memory/(1024*1024));
+        usleep(interval * 1000 * 1000);
         i++;
     }
 
