@@ -8,12 +8,14 @@ int main(int argc, char **argv) {
     arguments.pid = 0;
     arguments.interval = 1.5;
     arguments.repeat = 1;
+    arguments.use_header = true;
 
     // parse and assign arguments
     get_args(argc, argv, &arguments);
     pid_t pid = arguments.pid;
     double interval = arguments.interval;
     unsigned int repeat_times = arguments.repeat;
+    bool use_header = arguments.use_header;
 
     // declarations
     struct process_cpu_usage cpu_usage;
@@ -42,7 +44,9 @@ int main(int argc, char **argv) {
         last_measured_at = cpu_usage.measured_at;
 
         // Header CSV
-        if(i == 0) printf("CPU %%, Virtual Memory, Resident Memory\n");
+        if(i == 0)
+            if(use_header)
+                printf("CPU %%, Virtual Memory, Resident Memory\n");
 
         // Values CSV
         printf("%.1f%%, %zu MiB, %zu MiB\n",

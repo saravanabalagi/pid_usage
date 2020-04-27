@@ -15,6 +15,7 @@ struct arguments {
     pid_t pid;
     double interval;
     unsigned int repeat;
+    bool use_header;
 };
 
 static error_t parse_option( int key, char *arg, struct argp_state *state );
