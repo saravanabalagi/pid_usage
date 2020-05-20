@@ -1,0 +1,16 @@
+name: pid-usage
+version: '0.1.0'
+summary: Find CPU and RAM Utilization of a process
+description: |
+  A simple command line utility to find CPU and RAM Utilization within certain
+  intervals for a given PID and all its subprocesses.
+  Currently the output is CSV formatted.
+
+base: core18
+grade: devel # must be 'stable' to release into candidate/stable channels
+confinement: devmode # use 'strict' once you have the right plugs and slots
+
+parts:
+  primary:
+    plugin: cmake
+    build-packages: [gcc, make]
