@@ -14,4 +14,4 @@ parts:
   primary:
     plugin: cmake
     build-packages: [gcc, make]
-    source: '..'
+    source: '.'
