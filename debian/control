@@ -1,0 +1,20 @@
+Source: pid-usage
+Section: devel
+Priority: optional
+Maintainer: Saravanabalagi Ramachandran <saravanabalagi@hotmail.com>
+Build-Depends: cmake
+Standards-Version: 4.5.0
+Vcs-Browser: https://github.com/saravanabalagi/pid_usage
+Vcs-Git: https://github.com/saravanabalagi/pid_usage.git
+Homepage: https://github.com/saravanabalagi/pid_usage
+
+Package: pid-usage
+Architecture: any
+Depends:
+Description: Find CPU and RAM Utilization of a process
+  A simple command line utility to find CPU and RAM Utilization within certain
+  intervals for a given PID and all its subprocesses.
+  Currently the output is CSV formatted.
+
+# Check the following link for more usage
+# https://www.debian.org/doc/debian-policy/ch-controlfields.html#source-package-control-files-debian-control
