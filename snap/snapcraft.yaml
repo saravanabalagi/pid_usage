@@ -15,3 +15,7 @@ parts:
     plugin: cmake
     build-packages: [gcc, make]
     source: '.'
+
+apps:
+  primary:
+    command: pid-usage
