@@ -1,5 +1,8 @@
 ## PID Usage
 
+[![pid-usage](https://snapcraft.io//pid-usage/badge.svg)](https://snapcraft.io/pid-usage)
+[![pid-usage](https://snapcraft.io//pid-usage/trending.svg?name=0)](https://snapcraft.io/pid-usage)
+
 A tiny command line utility to get current CPU Utilization, RAM Usage and Virtual Memory Usage of a process 
 (including all its subprocesses) in CSV Format. It's particularly more useful if you're looking to save as a 
 CSV file for making graphs.
@@ -28,6 +31,20 @@ You can customlize the following options:
 ```
 
 ## Installation
+
+#### Install from Snap Store
+
+[![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/pid-usage)
+
+#### Install from PPA
+
+```sh
+sudo add-apt-repository ppa:saravanabalagi/linux-utils
+sudo apt update
+sudo apt install pid-usage
+```
+
+#### Download Binary
 
 Installation instructions for current user, all users, and for temporary execution 
 can be found in [INSTALL.md](INSTALL.md) 
