@@ -17,5 +17,5 @@ parts:
     source: '.'
 
 apps:
-  primary:
+  pid-usage:
     command: pid-usage
