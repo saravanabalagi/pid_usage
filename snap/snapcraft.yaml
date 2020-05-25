@@ -8,7 +8,7 @@ description: |
 
 base: core18
 grade: stable
-licence: MIT
+license: MIT
 confinement: strict
 
 parts:
